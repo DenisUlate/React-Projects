@@ -1,13 +1,13 @@
-export default function ShoppingCart() {
+export default function ShoppingCart({ cartItems, total }) {
 	return (
 		<div className="ShoppingCart-section">
-			<div>
-				<h2>Product name</h2>
-				<p>Product description</p>
-			</div>
-			<p>Product abount</p>
-			<p>Price</p>
-			<button>Checkout ➡️</button>
+			{cartItems.map((item) => (
+				<div key={item.id}>
+					<h2>{item.name}</h2>
+					<p>Quantity: {item.quantity}</p>
+				</div>
+			))}
+			<p>Total: {total}</p>
 		</div>
 	);
 }

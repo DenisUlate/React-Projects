@@ -1,19 +1,22 @@
 import "../index.css";
 import products from "../products";
-import Product1 from "../assets/images/mnz-1.jpg";
 
-export default function ProductList() {
+export default function ProductList({ products, onAddToCart }) {
 	return (
 		<section>
 			<div className="product-section">
-				<img src={Product1} alt="img" />
-				<div>
-					<h2>Product name</h2>
-					<p>Product description</p>
-				</div>
-				<p>Product abount</p>
-				<p>Price</p>
-				<button>Delete item</button>
+				{products.map((product) => (
+					<div key={product.id}>
+						<img src={product.image} alt={product.name} />
+						<div>
+							<h2>{product.name}</h2>
+							<p>{product.description}</p>
+						</div>
+						<p>{product.price}</p>
+						<button onClick={() => onAddToCart(product)}>Add to cart</button>
+						{/* Remove from cart */}
+					</div>
+				))}
 			</div>
 		</section>
 	);
