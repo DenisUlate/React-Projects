@@ -49,9 +49,9 @@ svg {
 	*,
 	*::before,
 	*::after {
-		animation-duration: 0.01ms !important;
+		animation-duration: 500ms !important;
 		animation-iteration-count: 1 !important;
-		transition-duration: 0.01ms !important;
+		transition-duration: 500ms !important;
 		scroll-behavior: auto !important;
 		transition: none;
 	}
@@ -59,4 +59,27 @@ svg {
 
 body {
 	font-family: "Poppins", sans-serif;
+}
+
+/* Scroll styles */
+/* width */
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: #111d1a;
+	border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #2c2b2b;
+	border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
 }
