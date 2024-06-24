@@ -1,12 +1,15 @@
 import React, { useReducer } from "react";
 
+// Estado inicial de la cuenta bancaria
 const initialState = {
 	balance: 0,
 	loan: 0,
 	isActive: false,
 };
 
+// Reducer para manejar las acciones de la cuenta bancaria
 function bankReducer(state, action) {
+	// Evita operaciones si la cuenta no está activa, excepto para abrirla
 	if (!state.isActive && action.type !== "OPEN_ACCOUNT") {
 		return state;
 	}
@@ -16,9 +19,11 @@ function bankReducer(state, action) {
 		case "DEPOSIT":
 			return { ...state, balance: state.balance + action.payload };
 		case "WITHDRAW":
+			// Previene retiros que exceden el balance
 			if (state.balance < action.payload) return state;
 			return { ...state, balance: state.balance - action.payload };
 		case "REQUEST_LOAN":
+			// Permite solo un préstamo a la vez
 			if (state.loan > 0) return state;
 			return {
 				...state,
@@ -26,6 +31,7 @@ function bankReducer(state, action) {
 				balance: state.balance + action.payload,
 			};
 		case "PAY_LOAN":
+			// Paga el préstamo solo si existe uno
 			if (state.loan === 0) return state;
 			return {
 				...state,
@@ -33,6 +39,7 @@ function bankReducer(state, action) {
 				balance: state.balance - state.loan,
 			};
 		case "closeAccount":
+			// Cierra la cuenta solo si no hay préstamo y el balance es cero
 			if (state.loan > 0 || state.balance !== 0) return state;
 			return initialState;
 		default:
@@ -41,6 +48,7 @@ function bankReducer(state, action) {
 }
 
 function App() {
+	// Usa useReducer para manejar el estado de la cuenta
 	const [{ balance, loan, isActive }, dispatch] = useReducer(
 		bankReducer,
 		initialState
@@ -59,6 +67,9 @@ function App() {
 					Loan: <strong>{loan}</strong>
 				</p>
 
+				{/* Botones para las operaciones bancarias */}
+				{/* Cada botón despacha una acción al reducer */}
+				{/* Los botones se desactivan según el estado de la cuenta */}
 				<p>
 					<button
 						className="w-full border border-neutral-400 rounded px-6 py-2 hover:bg-teal-700"
